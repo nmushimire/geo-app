@@ -1,6 +1,7 @@
 pipeline{
+    agent any
     stages{
-        stage( 'docker login'){
+        stage('docker login'){
             steps{
                 sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 571801003546.dkr.ecr.us-east-1.amazonaws.com'
             }
@@ -24,6 +25,6 @@ pipeline{
 
     }
         
-    
+
 
 
