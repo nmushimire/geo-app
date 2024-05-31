@@ -1,0 +1,29 @@
+pipeline{
+    stages{
+        stage( 'docker login'){
+            steps{
+                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 571801003546.dkr.ecr.us-east-1.amazonaws.com'
+            }
+        }
+        stage( 'docker image build'){
+            steps{
+                sh 'docker build -t utc-app-dev .'
+            }
+        }
+        stage( 'docker image tag'){
+            steps{
+                sh 'docker tag utc-app-dev:latest 571801003546.dkr.ecr.us-east-1.amazonaws.com/utc-app-dev:v_${BUILD_ID}'
+            }
+        }  
+        stage( 'docker image deploy'){
+            steps{
+                sh 'docker push 571801003546.dkr.ecr.us-east-1.amazonaws.com/utc-app-dev:v_${BUILD_ID}'
+            }
+        }  
+    }
+
+    }
+        
+    
+
+
